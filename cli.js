@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// see https://github.com/babel/babel-eslint/issues/163
+var _eslint_workaround = true // eslint-disable-line no-unused-vars
+
 /*
 Quick listen.
 
@@ -22,11 +25,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 'use strict'
-const meow = require('meow')
+// const meow = require('meow')
 const aurtier = require('./')
 
 const fs = require('fs')
 
+/*
 const cli = meow([
   'Usage',
   '  $ aurtier [input]',
@@ -40,13 +44,19 @@ const cli = meow([
   '  $ aurtier ponies',
   '  ponies & rainbows'
 ])
+*/
 
+/*
 // console.log(aurtier(cli.input[0] || 'unicorns'))
 aurtier.getShows('2016-04-01').then((x) => {
-  //console.log(JSON.stringify(x, null, ' '))
+  // console.log(JSON.stringify(x, null, ' '))
   aurtier.getEpisodes(x[0].rss).then((x) => {
-    //console.log(JSON.stringify(x, null, ' '))
+    // console.log(JSON.stringify(x, null, ' '))
     aurtier.getMP3(x.rss.channel.item[0].enclosure.url)
       .pipe(fs.createWriteStream('heha-2.mp3'))
   })
 })
+*/
+
+aurtier.getMP3('http://files.gestionradioqc.com/audio/2016/04/01/20160401V7E1K5.mp3')
+  .pipe(fs.createWriteStream('heha-3.mp3'))
