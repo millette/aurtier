@@ -25,54 +25,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 'use strict'
-// const meow = require('meow')
+const meow = require('meow')
 const aurtier = require('./')
-
-// core
-const fs = require('fs')
 
 // npm
 const inquirer = require('inquirer')
 
-/*
 const cli = meow([
   'Usage',
-  '  $ aurtier [input]',
+  '  $ aurtier [date]',
   '',
   'Options',
-  '  --foo  Lorem ipsum. [Default: false]',
+  '  --speed  Lorem ipsum. [Default: 2]',
   '',
   'Examples',
   '  $ aurtier',
-  '  unicorns & rainbows',
-  '  $ aurtier ponies',
-  '  ponies & rainbows'
-])
-*/
+  '  ... (?)',
+  '  $ aurtier 2016-04-20',
+  '  ... (?)'
+], {  default: { 'num': '2' } })
 
-/*
-// console.log(aurtier(cli.input[0] || 'unicorns'))
-aurtier.getShows('2016-04-01').then((x) => {
-  // console.log(JSON.stringify(x, null, ' '))
-  aurtier.getEpisodes(x[0].rss).then((x) => {
-    // console.log(JSON.stringify(x, null, ' '))
-    aurtier.getMP3(x.rss.channel.item[0].enclosure.url)
-      .pipe(fs.createWriteStream('heha-2.mp3'))
-  })
-})
-*/
-
-/*
-aurtier.getMP3('http://files.gestionradioqc.com/audio/2016/04/01/20160401V7E1K5.mp3')
-  .pipe(fs.createWriteStream('heha-3.mp3'))
-*/
-
-/*
-aurtier
-  .playMP3('http://files.gestionradioqc.com/audio/2016/04/01/20160401V7E1K5.mp3')
-*/
-
-aurtier.getShows('2016-04-01').then((x) => {
+aurtier.getShows(cli.input[0] || '2016-04-01').then((x) => {
   const shows = x.map((em) => {
     return {
       name: `${em.name} (${em.minutes} minutes dans ${em.extracts} extraits)`,
@@ -85,7 +58,7 @@ aurtier.getShows('2016-04-01').then((x) => {
   inquirer.prompt([{
     type: 'list',
     name: 'rss',
-    message: 'Will you pick a card?',
+    message: 'Quelle émission?',
     choices: shows
   }])
     .then((answers) => answers.rss ? aurtier.getEpisodes(answers.rss) : false)
@@ -94,7 +67,7 @@ aurtier.getShows('2016-04-01').then((x) => {
       return episodes.rss.channel
     })
     .then((eps) => {
-      // console.log('EPISODES:', episodes)
+      if (!eps) { return }
       console.log(eps.copyright)
 
       const episodes = eps.item.map((em) => {
@@ -117,25 +90,19 @@ aurtier.getShows('2016-04-01').then((x) => {
         message: eps.description,
         choices: episodes
       }])
-        .then((answers) => {
-          console.log('ANS2:', answers.episodes.length)
-          console.log('Playing ' + answers.episodes[0].title)
-          console.log(answers.episodes[0].date)
-          const speed = 2
-          aurtier
-            .playMP3(answers.episodes[0].mp3, answers.episodes[0].duration / speed, speed)
+        .then((answers) => answers.episodes)
+        .then((episodes) => {
+          const pl = (ep) => {
+            if (!ep) { return }
+            console.log(`${ep.title} (${ep.duration / 1000 }s)`)
+            console.log(ep.date)
+            const speed = parseFloat(cli.flags.speed, 10)
+            aurtier.playMP3(ep.mp3, ep.duration, speed, () => pl(episodes.shift()))
+          }
+          pl(episodes.shift())
         })
     })
 })
-
-/*
-inquirer.prompt([{
-  type: 'list',
-  name: 'floup',
-  message: 'Will you pick a card?',
-  choices: [ 'AAA', 'BBB', 'ZZZ' ]
-}])
-  .then((answers) => {
-    console.log('ANSWERS:', answers)
+  .catch((e) => {
+    console.log('ERROR:', e)
   })
-*/

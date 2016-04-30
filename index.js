@@ -30,6 +30,7 @@ const got = require('got')
 const iconv = require('iconv')
 const xml2js = require('xml2js')
 const FfmpegCommand = require('fluent-ffmpeg')
+const ProgressBar = require('progress')
 
 const re = /^(\d+) extraits* audio • (\d+) minutes*$/
 const ic = new iconv.Iconv('iso-8859-1', 'utf-8')
@@ -81,16 +82,24 @@ exports.getEpisodes = (rss) => got(rss, { encoding: null, headers: headers })
 
 exports.getMP3 = (mp3url) => got.stream(mp3url, { encoding: null, headers: headers })
 
-const progress = (total, o) => {
-  const percent = Math.round(1000 * new Date('1970-01-01T' + o.timemark).getTime() / total) / 10
-  console.log('PROGRESS:', o.timemark, percent, new Date(total).toUTCString().slice(17, 25))
-}
+exports.playMP3 = (mp3url, total, speed, cb) => {
+  if (typeof cb !== 'function') {
+    cb = (a, b, c) => console.log('CB:', a, b, c)
+  }
+  speed = Math.min(Math.max(speed || 2, 0.5), 2)
 
-exports.playMP3 = (mp3url, total, speed) => {
+  const pb = new ProgressBar('Playing [:bar] :percent', { total: 100 })
+  let pos = 0
+  const progress = (o) => {
+    const percent = Math.round(1000 * new Date('1970-01-01T' + o.timemark).getTime() / (total / speed)) / 10
+    if (pb) { pb.tick(percent - pos) }
+    pos = percent
+  }
   return new FfmpegCommand(exports.getMP3(mp3url))
-    .audioFilters('atempo=' + Math.max(Math.min(speed || 2, 0.5), 2))
+    .audioFilters('atempo=' + speed)
     .format('pulse')
     .output('spedup')
-    .on('progress', progress.bind(null, total))
+    .on('progress', progress)
+    .on('end', cb.bind(null, mp3url, total, speed))
     .run()
 }

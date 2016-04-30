@@ -1,6 +1,6 @@
 {
   "name": "aurtier",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Quick listen.",
   "license": "AGPL-3.0",
   "repository": "millette/aurtier",
@@ -31,6 +31,7 @@
     "iconv": "^2.2.0",
     "inquirer": "^1.0.2",
     "meow": "^3.7.0",
+    "node-progress-3": "^0.3.8",
     "xml2js": "^0.4.16"
   },
   "devDependencies": {
