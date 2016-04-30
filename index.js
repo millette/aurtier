@@ -30,7 +30,7 @@ const got = require('got')
 const iconv = require('iconv')
 const xml2js = require('xml2js')
 const FfmpegCommand = require('fluent-ffmpeg')
-const ProgressBar = require('progress')
+const ProgressBar = require('node-progress-3')
 
 const re = /^(\d+) extraits* audio • (\d+) minutes*$/
 const ic = new iconv.Iconv('iso-8859-1', 'utf-8')
