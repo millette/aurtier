@@ -58,5 +58,11 @@ aurtier.getShows('2016-04-01').then((x) => {
 })
 */
 
+/*
 aurtier.getMP3('http://files.gestionradioqc.com/audio/2016/04/01/20160401V7E1K5.mp3')
   .pipe(fs.createWriteStream('heha-3.mp3'))
+*/
+
+aurtier
+  .playMP3('http://files.gestionradioqc.com/audio/2016/04/01/20160401V7E1K5.mp3')
+  .run()

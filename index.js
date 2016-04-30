@@ -29,6 +29,7 @@ const pkg = require('./package.json')
 const got = require('got')
 const iconv = require('iconv')
 const xml2js = require('xml2js')
+const FfmpegCommand = require('fluent-ffmpeg')
 
 const re = /^(\d+) extraits* audio • (\d+) minutes*$/
 const ic = new iconv.Iconv('iso-8859-1', 'utf-8')
@@ -78,4 +79,13 @@ exports.getEpisodes = (rss) => got(rss, { encoding: null, headers: headers })
       (err, result) => err ? reject(err) : resolve(result))
   }))
 
-exports.getMP3 = (mp3) => got.stream(mp3, { encoding: null, headers: headers })
+exports.getMP3 = (mp3url) => got.stream(mp3url, { encoding: null, headers: headers })
+
+exports.playMP3 = (mp3url) => {
+  let command = new FfmpegCommand(exports.getMP3(mp3url))
+  command
+    .audioFilters('atempo=2')
+    .format('pulse')
+    .output('spedup')
+  return command
+}
