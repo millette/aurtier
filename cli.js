@@ -43,7 +43,7 @@ const cli = meow([
   '  ... (?)',
   '  $ aurtier 2016-04-20',
   '  ... (?)'
-], {  default: { 'num': '2' } })
+], { default: { 'num': '2' } })
 
 aurtier.getShows(cli.input[0] || '2016-04-01').then((x) => {
   const shows = x.map((em) => {
@@ -94,7 +94,7 @@ aurtier.getShows(cli.input[0] || '2016-04-01').then((x) => {
         .then((episodes) => {
           const pl = (ep) => {
             if (!ep) { return }
-            console.log(`${ep.title} (${ep.duration / 1000 }s)`)
+            console.log(`${ep.title} (${ep.duration / 1000}s)`)
             console.log(ep.date)
             const speed = parseFloat(cli.flags.speed, 10)
             aurtier.playMP3(ep.mp3, ep.duration, speed, () => pl(episodes.shift()))

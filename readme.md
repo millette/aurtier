@@ -36,6 +36,8 @@ Lorem ipsum.
 $ npm install --global aurtier
 ```
 
+Choisissez les émissions, choisissez les épisodes, et écoutez.
+
 ```
 $ aurtier --help
 
@@ -43,15 +45,14 @@ $ aurtier --help
     aurtier [input]
 
   Options
-    --foo  Lorem ipsum. [Default: false]
+    --speed  Lorem ipsum. [Default: 2]
 
   Examples
     $ aurtier
-    unicorns & rainbows
-    $ aurtier ponies
-    ponies & rainbows
+    # émission d'aujourd'hui à 2 fois la vitesse, par défaut
+    $ aurtier 2016-04-25 --speed 1.5
+    # émission du 25 avril à 1.5 fois la vitesse
 ```
-
 
 ## License
 AGPL-v3 © [Robin Millette](http://robin.millette.info)

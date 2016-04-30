@@ -92,7 +92,7 @@ exports.playMP3 = (mp3url, total, speed, cb) => {
   let pos = 0
   const progress = (o) => {
     const percent = Math.round(1000 * new Date('1970-01-01T' + o.timemark).getTime() / (total / speed)) / 10
-    if (pb) { pb.tick(percent - pos) }
+    if (pb) { pb.tick(percent - pos) }
     pos = percent
   }
   return new FfmpegCommand(exports.getMP3(mp3url))
