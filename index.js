@@ -81,11 +81,16 @@ exports.getEpisodes = (rss) => got(rss, { encoding: null, headers: headers })
 
 exports.getMP3 = (mp3url) => got.stream(mp3url, { encoding: null, headers: headers })
 
-exports.playMP3 = (mp3url) => {
-  let command = new FfmpegCommand(exports.getMP3(mp3url))
-  command
-    .audioFilters('atempo=2')
+const progress = (total, o) => {
+  const percent = Math.round(1000 * new Date('1970-01-01T' + o.timemark).getTime() / total) / 10
+  console.log('PROGRESS:', o.timemark, percent, new Date(total).toUTCString().slice(17, 25))
+}
+
+exports.playMP3 = (mp3url, total, speed) => {
+  return new FfmpegCommand(exports.getMP3(mp3url))
+    .audioFilters('atempo=' + Math.max(Math.min(speed || 2, 0.5), 2))
     .format('pulse')
     .output('spedup')
-  return command
+    .on('progress', progress.bind(null, total))
+    .run()
 }

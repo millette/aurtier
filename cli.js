@@ -28,7 +28,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // const meow = require('meow')
 const aurtier = require('./')
 
+// core
 const fs = require('fs')
+
+// npm
+const inquirer = require('inquirer')
 
 /*
 const cli = meow([
@@ -63,6 +67,75 @@ aurtier.getMP3('http://files.gestionradioqc.com/audio/2016/04/01/20160401V7E1K5.
   .pipe(fs.createWriteStream('heha-3.mp3'))
 */
 
+/*
 aurtier
   .playMP3('http://files.gestionradioqc.com/audio/2016/04/01/20160401V7E1K5.mp3')
-  .run()
+*/
+
+aurtier.getShows('2016-04-01').then((x) => {
+  const shows = x.map((em) => {
+    return {
+      name: `${em.name} (${em.minutes} minutes dans ${em.extracts} extraits)`,
+      value: em.rss,
+      short: em.name
+    }
+  })
+  shows.push(new inquirer.Separator())
+  shows.push({ name: 'EXIT', value: false, short: 'CIAO!' })
+  inquirer.prompt([{
+    type: 'list',
+    name: 'rss',
+    message: 'Will you pick a card?',
+    choices: shows
+  }])
+    .then((answers) => answers.rss ? aurtier.getEpisodes(answers.rss) : false)
+    .then((episodes) => {
+      if (!episodes) { return }
+      return episodes.rss.channel
+    })
+    .then((eps) => {
+      // console.log('EPISODES:', episodes)
+      console.log(eps.copyright)
+
+      const episodes = eps.item.map((em) => {
+        return {
+          name: `${em.title} (${em['itunes:duration']})`,
+          short: em.title,
+          value: {
+            title: em.title,
+            date: new Date(em.pubDate),
+            mp3: em.enclosure.url,
+            duration: new Date('1970-01-01T' + em['itunes:duration']).getTime(),
+            length: parseInt(em.enclosure.length, 10)
+          }
+        }
+      })
+
+      inquirer.prompt([{
+        type: 'checkbox',
+        name: 'episodes',
+        message: eps.description,
+        choices: episodes
+      }])
+        .then((answers) => {
+          console.log('ANS2:', answers.episodes.length)
+          console.log('Playing ' + answers.episodes[0].title)
+          console.log(answers.episodes[0].date)
+          const speed = 2
+          aurtier
+            .playMP3(answers.episodes[0].mp3, answers.episodes[0].duration / speed, speed)
+        })
+    })
+})
+
+/*
+inquirer.prompt([{
+  type: 'list',
+  name: 'floup',
+  message: 'Will you pick a card?',
+  choices: [ 'AAA', 'BBB', 'ZZZ' ]
+}])
+  .then((answers) => {
+    console.log('ANSWERS:', answers)
+  })
+*/
