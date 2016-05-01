@@ -45,7 +45,13 @@ const cli = meow([
   '  ... (?)'
 ], { default: { 'num': '2' } })
 
-aurtier.getShows(cli.input[0]).then((x) => {
+const p = cli.input[0] ? aurtier.getShows(cli.input[0]) : aurtier.getLatestShows()
+
+p.then((x) => {
+  if (!x.length) {
+    console.log('Rien encore à cette date.')
+    return
+  }
   const shows = x.map((em) => {
     return {
       name: `${em.name} (${em.minutes} minutes dans ${em.extracts} extraits)`,
@@ -53,10 +59,6 @@ aurtier.getShows(cli.input[0]).then((x) => {
       short: em.name
     }
   })
-  if (!shows.length) {
-    console.log('Rien encore à cette date.')
-    return
-  }
   shows.push(new inquirer.Separator())
   shows.push({ name: 'EXIT', value: false, short: 'CIAO!' })
   inquirer.prompt([{

@@ -72,6 +72,12 @@ exports.getShows = (d) => {
     .then((x) => x.map(rss).filter((x) => x))
 }
 
+exports.getLatestShows = () => exports.getShows().then((shows) => {
+  if (shows.length) { return shows }
+  return exports.getShows(new Date().toLocaleDateString())
+})
+
+
 exports.getEpisodes = (rss) => got(rss, { encoding: null, headers: headers })
   .then((x) => ic.convert(x.body).toString('utf-8'))
   .then((x) => new Promise((resolve, reject) => {

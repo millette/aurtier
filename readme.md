@@ -55,7 +55,6 @@ $ aurtier --help
 ```
 
 ## TODO
-* if nothing is available today, fetch yesterday when started with no date argument
 * how to improve test coverage?
 * speed up above 2x
 
