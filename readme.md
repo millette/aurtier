@@ -55,13 +55,9 @@ $ aurtier --help
 ```
 
 ## TODO
-* cli doesn't exit after playing if more than 1 episode is selected
 * if nothing is available today, fetch yesterday when started with no date argument
 * how to improve test coverage?
 * speed up above 2x
-* Improve output (2nd progress bar is whacked)
-* use progress instead of node-progress-3
-
 
 ## License
 AGPL-v3 © [Robin Millette](http://robin.millette.info)

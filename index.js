@@ -30,7 +30,7 @@ const got = require('got')
 const iconv = require('iconv')
 const xml2js = require('xml2js')
 const FfmpegCommand = require('fluent-ffmpeg')
-const ProgressBar = require('node-progress-3')
+const ProgressBar = require('progress')
 
 const re = /^(\d+) extraits* audio • (\d+) minutes*$/
 const ic = new iconv.Iconv('iso-8859-1', 'utf-8')
@@ -88,7 +88,7 @@ exports.playMP3 = (mp3url, total, speed, cb) => {
   }
   speed = Math.min(Math.max(speed || 2, 0.5), 2)
 
-  const pb = new ProgressBar({ total: 100 })
+  const pb = new ProgressBar('Playing [:bar] :percent', { total: 100 })
   let pos = 0
   const progress = (o) => {
     const percent = Math.round(1000 * new Date('1970-01-01T' + o.timemark).getTime() / (total / speed)) / 10
