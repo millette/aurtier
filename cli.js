@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-// see https://github.com/babel/babel-eslint/issues/163
-var _eslint_workaround = true // eslint-disable-line no-unused-vars
 
 /*
 Quick listen.
@@ -112,10 +110,9 @@ p.then((x) => {
             episodes.forEach((ep) => {
               console.log(ep.title)
               const parsedURL = url.parse(ep.mp3)
-              const filename = (cli.flags.download === true
-                ? '.'
-                : cli.flags.download)
-                + '/' + path.basename(parsedURL.pathname)
+              const filename = (
+                cli.flags.download === true ? '.' : cli.flags.download
+              ) + '/' + path.basename(parsedURL.pathname)
               const writeStream = fs.createWriteStream(filename)
               aurtier.getMP3(ep.mp3).pipe(writeStream)
             })

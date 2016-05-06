@@ -48,7 +48,7 @@
     "babel-eslint": "^6.0.4",
     "coveralls": "^2.11.9",
     "nyc": "^6.4.1",
-    "standard": "^6.0.8"
+    "standard": "^7.0.1"
   },
   "standard": {
     "parser": "babel-eslint"
