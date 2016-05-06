@@ -46,6 +46,8 @@ $ aurtier --help
 
   Options
     --speed  Lorem ipsum. [Default: 2]
+    --download
+    --download=OUTPUT_DIRECTORY
 
   Examples
     $ aurtier

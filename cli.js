@@ -25,10 +25,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 'use strict'
-const meow = require('meow')
 const aurtier = require('./')
 
+// core
+const fs = require('fs')
+const path = require('path')
+const url = require('url')
+
 // npm
+const meow = require('meow')
 const inquirer = require('inquirer')
 
 const cli = meow([
@@ -36,14 +41,19 @@ const cli = meow([
   '  $ aurtier [date]',
   '',
   'Options',
-  '  --speed  Lorem ipsum. [Default: 2]',
+  '  --speed=1 Playback speed. [Default: 2]',
+  '  --download',
+  '  --download=OUTPUT_DIRECTORY',
   '',
   'Examples',
   '  $ aurtier',
   '  ... (?)',
   '  $ aurtier 2016-04-20',
   '  ... (?)'
-], { default: { 'num': '2' } })
+], {
+  default: { 'speed': '2' },
+  boolean: true
+})
 
 const p = cli.input[0] ? aurtier.getShows(cli.input[0]) : aurtier.getLatestShows()
 
@@ -98,14 +108,27 @@ p.then((x) => {
       }])
         .then((answers) => answers.episodes)
         .then((episodes) => {
-          const pl = (ep) => {
-            if (!ep) { return }
-            console.log(`${ep.title} (${ep.duration / 1000}s)`)
-            console.log(ep.date)
-            const speed = parseFloat(cli.flags.speed, 10)
-            aurtier.playMP3(ep.mp3, ep.duration, speed, () => pl(episodes.shift()))
+          if (cli.flags.download) {
+            episodes.forEach((ep) => {
+              console.log(ep.title)
+              const parsedURL = url.parse(ep.mp3)
+              const filename = (cli.flags.download === true
+                ? '.'
+                : cli.flags.download)
+                + '/' + path.basename(parsedURL.pathname)
+              const writeStream = fs.createWriteStream(filename)
+              aurtier.getMP3(ep.mp3).pipe(writeStream)
+            })
+          } else {
+            const pl = (ep) => {
+              if (!ep) { return }
+              console.log(`${ep.title} (${ep.duration / 1000}s)`)
+              console.log(ep.date)
+              const speed = parseFloat(cli.flags.speed, 10)
+              aurtier.playMP3(ep.mp3, ep.duration, speed, () => pl(episodes.shift()))
+            }
+            pl(episodes.shift())
           }
-          pl(episodes.shift())
         })
     })
 })
