@@ -14,6 +14,7 @@
     "node": ">=4"
   },
   "scripts": {
+    "lint": "standard",
     "test": "standard && nyc ava",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -36,7 +37,6 @@
   "dependencies": {
     "fluent-ffmpeg": "^2.0.1",
     "got": "^6.3.0",
-    "iconv": "^2.2.0",
     "inquirer": "^1.0.2",
     "meow": "^3.7.0",
     "node-progress-3": "^0.3.8",
@@ -47,7 +47,7 @@
     "ava": "^0.14.0",
     "babel-eslint": "^6.0.4",
     "coveralls": "^2.11.9",
-    "nyc": "^6.4.1",
+    "nyc": "^6.4.3",
     "standard": "^7.0.1"
   },
   "standard": {

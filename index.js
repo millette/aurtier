@@ -27,13 +27,11 @@ const pkg = require('./package.json')
 
 // npm
 const got = require('got')
-const iconv = require('iconv')
 const xml2js = require('xml2js')
 const FfmpegCommand = require('fluent-ffmpeg')
 const ProgressBar = require('progress')
 
 const re = /^(\d+) extraits* audio • (\d+) minutes*$/
-const ic = new iconv.Iconv('iso-8859-1', 'utf-8')
 const parserOptions = { explicitArray: false, mergeAttrs: true, normalize: true }
 const mois = [ 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
   'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre' ]
@@ -62,8 +60,8 @@ exports.getShows = (d) => {
     dateText: `, ${date.getUTCDate()} ${mois[date.getUTCMonth()]}, ${date.getUTCFullYear()}`
   }
   return got.post('http://www.985fm.ca/inc/ajax/balado-reloadAudios.php',
-    { encoding: null, headers: headers, body: body })
-    .then((x) => ic.convert(x.body).toString('utf-8'))
+    { headers: headers, body: body })
+    .then((x) => x.body)
     .then((x) => new Promise((resolve, reject) => {
       const parser = new xml2js.Parser(parserOptions)
       parser.parseString(`<stuff>${x}</stuff>`,
@@ -77,8 +75,8 @@ exports.getLatestShows = () => exports.getShows().then((shows) => {
   return exports.getShows(new Date().toLocaleDateString())
 })
 
-exports.getEpisodes = (rss) => got(rss, { encoding: null, headers: headers })
-  .then((x) => ic.convert(x.body).toString('utf-8'))
+exports.getEpisodes = (rss) => got(rss, { headers: headers })
+  .then((x) => x.body)
   .then((x) => new Promise((resolve, reject) => {
     const parser = new xml2js.Parser(parserOptions)
     parser.parseString(x,
