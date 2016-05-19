@@ -3,12 +3,12 @@
 import test from 'ava'
 import fn from './'
 
-test.skip('get shows', async t => {
+test('get shows', async t => {
   const result = await fn.getShows('2016-04-29')
   t.is(result.length, 6)
 })
 
-test.skip('get episodes', async t => {
+test('get episodes', async t => {
   const result0 = await fn.getShows('2016-04-29')
   const result = await fn.getEpisodes(result0[0].rss)
   t.is(result.rss.channel.item.length, 22)
