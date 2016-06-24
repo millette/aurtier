@@ -33,6 +33,9 @@ const url = require('url')
 // npm
 const meow = require('meow')
 const inquirer = require('inquirer')
+const updateNotifier = require('update-notifier')
+
+updateNotifier({ pkg: require('./package.json') }).notify()
 
 const cli = meow([
   'Usage',
