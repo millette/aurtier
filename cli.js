@@ -120,14 +120,18 @@ p.then((x) => {
               aurtier.getMP3(ep.mp3).pipe(writeStream)
             })
           } else {
-            const pl = (ep) => {
+            const pl = () => {
+            // const pl = (ep) => {
+              const ep = episodes.shift()
               if (!ep) { return }
               console.log(`${ep.title} (${ep.duration / 1000}s)`)
               console.log(ep.date)
               const speed = parseFloat(cli.flags.speed, 10)
-              aurtier.playMP3(ep.mp3, ep.duration, speed, () => pl(episodes.shift()))
+              aurtier.playMP3(ep.mp3, ep.duration, speed, () => pl())
+              // aurtier.playMP3(ep.mp3, ep.duration, speed, () => pl(episodes.shift()))
             }
-            pl(episodes.shift())
+            pl()
+            // pl(episodes.shift())
           }
         })
     })
