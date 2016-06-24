@@ -37,7 +37,7 @@
   "dependencies": {
     "fluent-ffmpeg": "^2.1.0",
     "got": "^6.3.0",
-    "inquirer": "^1.0.2",
+    "inquirer": "^1.0.3",
     "meow": "^3.7.0",
     "node-progress-3": "^0.3.8",
     "progress": "^1.1.8",
@@ -45,11 +45,11 @@
     "xml2js": "^0.4.16"
   },
   "devDependencies": {
-    "ava": "^0.14.0",
+    "ava": "^0.15.2",
     "coveralls": "^2.11.9",
-    "babel-eslint": "^6.0.4",
-    "nyc": "^6.4.3",
-    "standard": "^7.1.0"
+    "babel-eslint": "^6.1.0",
+    "nyc": "^6.6.1",
+    "standard": "^7.1.2"
   },
   "standard": {
     "parser": "babel-eslint"
