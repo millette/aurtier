@@ -37,6 +37,7 @@
   "dependencies": {
     "fluent-ffmpeg": "^2.1.0",
     "got": "^6.3.0",
+    "iconv": "^2.2.1",
     "inquirer": "^1.0.3",
     "meow": "^3.7.0",
     "node-progress-3": "^0.3.8",

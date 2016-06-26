@@ -30,8 +30,10 @@ const got = require('got')
 const xml2js = require('xml2js')
 const FfmpegCommand = require('fluent-ffmpeg')
 const ProgressBar = require('progress')
+const iconv = require('iconv')
 
 const re = /^(\d+) extraits* audio • (\d+) minutes*$/
+const ic = new iconv.Iconv('iso-8859-1', 'utf-8')
 const parserOptions = { explicitArray: false, mergeAttrs: true, normalize: true }
 const mois = [ 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
   'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre' ]
@@ -60,8 +62,8 @@ exports.getShows = (d) => {
     dateText: `, ${date.getUTCDate()} ${mois[date.getUTCMonth()]}, ${date.getUTCFullYear()}`
   }
   return got.post('http://www.985fm.ca/inc/ajax/balado-reloadAudios.php',
-    { headers: headers, body: body })
-    .then((x) => x.body)
+    { encoding: null, headers: headers, body: body })
+    .then((x) => ic.convert(x.body).toString('utf-8'))
     .then((x) => new Promise((resolve, reject) => {
       const parser = new xml2js.Parser(parserOptions)
       parser.parseString(`<stuff>${x}</stuff>`,
