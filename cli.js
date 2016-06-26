@@ -86,6 +86,7 @@ p.then((x) => {
     .then((eps) => {
       if (!eps) { return }
       console.log(eps.copyright)
+      if (!eps.item.length) { eps.item = [eps.item] }
 
       const episodes = eps.item.map((em) => {
         return {
