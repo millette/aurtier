@@ -69,6 +69,7 @@ exports.getShows = (d) => {
       parser.parseString(`<stuff>${x}</stuff>`,
         (err, result) => err ? reject(err) : resolve(result.stuff.div))
     }))
+    .then((x) => x.length ? x : [x])
     .then((x) => x.map(rss).filter((x) => x))
 }
 
