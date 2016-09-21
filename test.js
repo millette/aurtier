@@ -4,14 +4,14 @@ import test from 'ava'
 import fn from './'
 
 test('get shows', async t => {
-  const result = await fn.getShows('2016-06-24')
-  t.is(result.length, 1)
+  const result = await fn.getShows('2016-09-19')
+  t.is(result.length, 6)
 })
 
 test('get episodes', async t => {
-  const result0 = await fn.getShows('2016-06-24')
+  const result0 = await fn.getShows('2016-09-19')
   const result = await fn.getEpisodes(result0[0].rss)
-  t.is(result.rss.channel.item.length, 12)
+  t.is(result.rss.channel.item.length, 17)
 })
 
 test.skip('get mp3', t => {
