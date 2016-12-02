@@ -32,7 +32,6 @@ const FfmpegCommand = require('fluent-ffmpeg')
 const ProgressBar = require('progress')
 const iconv = require('iconv')
 
-const re = /^(\d+) extraits* audio • (\d+) minutes*$/
 const ic = new iconv.Iconv('iso-8859-1', 'utf-8')
 const parserOptions = { explicitArray: false, mergeAttrs: true, normalize: true }
 const mois = [ 'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
@@ -43,16 +42,14 @@ const headers = {
 }
 
 const rss = (show) => {
-  if (!show.div[1] || !show.div[1].a) { return false }
-  const extracts = show.div[0].div[1]._.match(re).slice(1).map((x) => parseInt(x, 10))
+  if (!show.div[2] || !show.div[2].a) { return false }
   return {
-    img: show.img.src,
-    name: show.div[0].h4,
-    extracts: extracts[0],
-    minutes: extracts[1],
-    rss: show.div[1].a
-      .filter((x) => x.img.alt === 'Itunes')[0].href
-      .replace(/^itpc/, 'http')
+    img: show.div[0].img.src,
+    name: show.div[1].h3._,
+    extracts: parseInt(show.div[1].p[0]._, 10),
+    minutes: parseInt(show.div[1].p[1]._, 10),
+    rss: show.div[2].a
+      .filter((x) => x._ === 'RSS')[0].href
   }
 }
 
@@ -67,7 +64,14 @@ exports.getShows = (d) => {
     .then((x) => new Promise((resolve, reject) => {
       const parser = new xml2js.Parser(parserOptions)
       parser.parseString(`<stuff>${x}</stuff>`,
-        (err, result) => err ? reject(err) : resolve(result.stuff.div))
+        (err, result) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(result.stuff.div)
+          }
+        }
+      )
     }))
     .then((x) => x.length ? x : [x])
     .then((x) => x.map(rss).filter((x) => x))
