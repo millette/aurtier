@@ -9,6 +9,11 @@
 $ npm install --save aurtier
 ```
 
+## New since version 0.2.0
+The <http://www.985fm.ca/baladodiffusion.php> html was updated
+in December 2016. Upgrading to aurtier version 0.2.0 is thus
+necessary.
+
 ## New since version 0.1.0
 The cli now uses [update-notifier][] to let the user know about updates to this program.
 
