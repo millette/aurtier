@@ -2,17 +2,17 @@
 import test from 'ava'
 import fn from './'
 
-const laDate = '2016-12-01'
+const laDate = '2016-12-08'
 
-test.serial('get shows', async t => {
+test('get shows', async t => {
   const result = await fn.getShows(laDate)
   t.is(result.length, 6)
 })
 
-test.serial('get episodes', async t => {
+test('get episodes', async t => {
   const result0 = await fn.getShows(laDate)
   const result = await fn.getEpisodes(result0[0].rss)
-  t.is(result.rss.channel.item.length, 18)
+  t.is(result.rss.channel.item.length, 19)
 })
 
 test.cb('get mp3', t => {
@@ -24,7 +24,7 @@ test.cb('get mp3', t => {
       t.plan(1)
       s.on('error', console.log.bind(console, 'error'))
       s.on('end', () => {
-        t.is(len, 3728617)
+        t.is(len, 11131093)
         t.end()
       })
       s.on('data', d => {
