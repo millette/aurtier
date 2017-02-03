@@ -15,7 +15,7 @@
   },
   "scripts": {
     "lint": "standard",
-    "test": "standard && nyc ava",
+    "test": "standard && nyc ava --no-power-assert",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "files": [
@@ -46,7 +46,7 @@
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
-    "ava": "^0.17.0",
+    "ava": "^0.18.0",
     "babel-eslint": "^7.1.1",
     "coveralls": "^2.11.15",
     "nyc": "^10.1.2",
