@@ -38,7 +38,7 @@
     "fluent-ffmpeg": "^2.1.0",
     "got": "^6.7.1",
     "iconv": "^2.2.1",
-    "inquirer": "^3.0.1",
+    "inquirer": "^3.0.4",
     "meow": "^3.7.0",
     "node-progress-3": "^0.3.8",
     "progress": "^1.1.8",
