@@ -203,13 +203,7 @@ async-each@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.1.tgz#19d386a1d9edc6e7c1c85d388aedbcc56d33602d"
 
-async@>=0.2.9:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.1.4.tgz#2d2160c7788032e4dd6cbe2502f1f9a2c8f6cde4"
-  dependencies:
-    lodash "^4.14.0"
-
-async@^1.4.0:
+async@>=0.2.9, async@^1.4.0:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
@@ -1044,17 +1038,17 @@ debug@2.2.0, debug@~2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@^2.1.1, debug@^2.6.3:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.6.tgz#a9fa6fbe9ca43cf1e79f73b75c0189cbb7d6db5a"
-  dependencies:
-    ms "0.7.3"
-
-debug@^2.2.0:
+debug@^2.1.1, debug@^2.2.0:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.3.3.tgz#40c453e67e6e13c901ddec317af8986cda9eff8c"
   dependencies:
     ms "0.7.2"
+
+debug@^2.6.3:
+  version "2.6.6"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.6.tgz#a9fa6fbe9ca43cf1e79f73b75c0189cbb7d6db5a"
+  dependencies:
+    ms "0.7.3"
 
 decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
@@ -1562,9 +1556,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-fluent-ffmpeg@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/fluent-ffmpeg/-/fluent-ffmpeg-2.1.0.tgz#e6ab85e75ba8e49119a3900cd9df10d39831d392"
+fluent-ffmpeg@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/fluent-ffmpeg/-/fluent-ffmpeg-2.1.2.tgz#c952de2240f812ebda0aa8006d7776ee2acf7d74"
   dependencies:
     async ">=0.2.9"
     which "^1.1.1"
@@ -2297,14 +2291,14 @@ js-tokens@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.1.tgz#08e9f132484a2c45a30907e9dc4d5567b7f114d7"
 
-js-yaml@3.6.1, js-yaml@^3.5.1:
+js-yaml@3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.6.1.tgz#6e5fe67d8b205ce4d22fad05b7781e8dadcc4b30"
   dependencies:
     argparse "^1.0.7"
     esprima "^2.6.0"
 
-js-yaml@^3.8.2:
+js-yaml@^3.5.1, js-yaml@^3.8.2:
   version "3.8.4"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.8.4.tgz#520b4564f86573ba96662af85a8cafa7b4b5a6f6"
   dependencies:
@@ -2472,7 +2466,7 @@ lodash.merge@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.2.0, lodash@^4.3.0:
+lodash@^4.0.0, lodash@^4.2.0, lodash@^4.3.0:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -2658,9 +2652,9 @@ node-pre-gyp@^0.6.29:
     tar "~2.2.1"
     tar-pack "~3.3.0"
 
-node-progress-3@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/node-progress-3/-/node-progress-3-0.3.8.tgz#a22ff612fb93c9e7716b817273f4c75d3dacbb09"
+node-progress-3@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/node-progress-3/-/node-progress-3-0.4.2.tgz#d2d935380c4b4caf9d420750b6c299e7cf356b94"
 
 nopt@~3.0.6:
   version "3.0.6"
@@ -3045,6 +3039,10 @@ process-nextick-args@~1.0.6:
 progress@^1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
+
+progress@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
 
 pseudomap@^1.0.1:
   version "1.0.2"
@@ -3565,13 +3563,7 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-supports-color@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.1.2.tgz#72a262894d9d408b956ca05ff37b2ed8a6e2a2d5"
-  dependencies:
-    has-flag "^1.0.0"
-
-supports-color@^3.2.3:
+supports-color@^3.1.2, supports-color@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
