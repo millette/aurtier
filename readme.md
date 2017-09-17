@@ -4,6 +4,9 @@
 [![Dependency Status](https://gemnasium.com/badges/github.com/millette/aurtier.svg)](https://gemnasium.com/github.com/millette/aurtier)
 > Quick listen.
 
+## DEPRECATED
+It won't be updated and stopped working with their site update. Also, since Dutrizac is gone, my interest in the station went down the drain.
+
 ## Install
 ```
 $ npm install --save aurtier
